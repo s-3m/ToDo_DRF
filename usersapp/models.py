@@ -14,7 +14,7 @@ class Users(AbstractUser):
     )
 
     uid = models.UUIDField(primary_key=True, default=uuid4)
-    username = models.CharField(verbose_name='Ваш ник', max_length=64, blank=False)
+    username = models.CharField(verbose_name='Ваш ник', max_length=64, blank=False, unique=True)
     first_name = models.CharField(verbose_name='Имя', max_length=64, blank=False)
     last_name = models.CharField(verbose_name='Фамилия', max_length=64, blank=False)
     birth_date = models.PositiveIntegerField(verbose_name='Дата рождения', null=True)
