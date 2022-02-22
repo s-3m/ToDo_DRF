@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class Users(AbstractUser):
-    gender_choices = (
+    post_choices = (
         ('Manager', 'Manager'),
         ('Developer', 'Developer'),
         ('Administrator', 'Administrator'),
@@ -19,4 +19,4 @@ class Users(AbstractUser):
     last_name = models.CharField(verbose_name='Фамилия', max_length=64, blank=False)
     birth_date = models.PositiveIntegerField(verbose_name='Дата рождения', null=True)
     email = models.EmailField(verbose_name='email', blank=False, unique=True)
-    user_post = models.CharField(verbose_name='Должность', max_length=15, choices=gender_choices, blank=True)
+    user_post = models.CharField(verbose_name='Должность', max_length=15, choices=post_choices, blank=True)
