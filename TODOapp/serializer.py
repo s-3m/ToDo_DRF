@@ -1,3 +1,4 @@
+from django.db.models import Model
 from rest_framework.serializers import ModelSerializer, StringRelatedField
 from usersapp.serializers import UsersModelsSerializers
 
@@ -12,10 +13,16 @@ class ProjectModelSerializer(ModelSerializer):
         fields = ['name', 'users', 'link']
 
 
+class SimpleProjectModelSerializer(ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ['name']
+
+
 class ToDoModelSerializer(ModelSerializer):
     user = StringRelatedField()
-    project = ProjectModelSerializer()
+    project = SimpleProjectModelSerializer()
 
     class Meta:
         model = ToDo
-        fields = '__all__'
+        exclude = ['id']
