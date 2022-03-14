@@ -57,6 +57,13 @@
   text-align: center;
   background-color: #d5d5d5;
 }
+
+.main_menu ul {
+  width: 30%;
+  justify-content: space-between;
+  background-color: #d5d5d5;
+}
+
 .main_menu_text {
   margin: auto;
   text-transform: uppercase;
@@ -89,3 +96,4 @@
   font-size: large;
   font-weight: bold;
 }
+
