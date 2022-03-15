@@ -7,8 +7,9 @@ import axios from "axios";
 // import Menu from "./components/menu";
 import Footer from "./components/footer";
 import Header from "./components/header";
+import NotFound404 from "./components/notFound"
 import {Row, Col} from 'antd'
-
+import {BrowserRouter, Navigate, Route, Routes, SwitchProps} from "react-router-dom";
 
 
 
@@ -56,32 +57,28 @@ class App extends React.Component {
     return (
         <div className={'wrapper'}>
             <div className={'container'}>
-                <div className={'main_menu'}>
-                    <Header />
-                </div>
-                <div className={'content'}>
-                    <div className={'users_list'}>
-                        <Row>
-                            <Col md={{span: 20, offset: 2}}>
-                                <UserList users={this.state.users}/>
-                            </Col>
-                        </Row>
+                <BrowserRouter>
+                    <div className={'main_menu'}>
+                        <Header />
                     </div>
-                    <div className={'projects_list'}>
-                        <Row>
-                            <Col md={{span: 20, offset: 2}}>
-                                <ProjectList projects={this.state.projects}/>
-                            </Col>
-                        </Row>
+                    <div className={'content'}>
+                        <div className={'data_table'}>
+                            <Row>
+                                <Col md={{span: 20, offset: 2}}>
+                                    <Routes>
+
+                                        <Route path="/users" element={<UserList users={this.state.users}/>} />
+                                        <Route path="/projects" element={<ProjectList projects={this.state.projects}/>} />
+                                        <Route path="/todo" element={<ToDotList todo={this.state.todo}/>} />
+                                        <Route path="/" element={<Navigate to="/users" />} />
+                                        <Route element={<NotFound404 />}/>
+
+                                    </Routes>
+                                </Col>
+                            </Row>
+                        </div>
                     </div>
-                    <div className={'todo_list'}>
-                        <Row>
-                            <Col md={{span: 20, offset: 2}}>
-                                <ToDotList todo={this.state.todo}/>
-                            </Col>
-                        </Row>
-                    </div>
-                </div>
+                </BrowserRouter>
                 <div className={'footer'}>
                     <Footer/>
                 </div>
