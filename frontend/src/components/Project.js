@@ -1,5 +1,6 @@
 import React from "react";
 import {Space, Table} from 'antd';
+import {Link} from 'react-router-dom';
 
 
 const ProjectList = ({projects}) => {
@@ -8,6 +9,7 @@ const ProjectList = ({projects}) => {
         title: 'Project name',
         dataIndex: 'name',
         key: 'name',
+        render: (text, record) => <Link to={record.name}>{record.name}</Link>
     },
     {
         title: 'User in project',
