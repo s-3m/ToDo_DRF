@@ -70,10 +70,11 @@ class App extends React.Component {
 
                                         <Route path="/users" element={<UserList users={this.state.users}/>} />
                                         <Route path="/projects" element={<ProjectList projects={this.state.projects}/>} />
-                                        <Route path="/todo" element={<ToDotList todo={this.state.todo}/>} />
                                         <Route path="/projects/:name" element={<ProjToDoList todo={this.state.todo}/>} />
+                                        <Route path="/todo" element={<ToDotList todo={this.state.todo}/>} />
                                         <Route path="/" element={<Navigate to="/users" />} />
-                                        <Route element={<NotFound404 />}/>
+                                        <Route path="/*" element={<NotFound404 />}/>
+
 
                                     </Routes>
                                 </Col>

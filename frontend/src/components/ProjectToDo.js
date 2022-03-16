@@ -1,11 +1,11 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import {Space, Table} from 'antd';
+import {Table} from 'antd';
 
 
 const ProjToDoList = ({todo}) => {
     let {name} = useParams();
-    let filter_items = todo.filter((item) => item.project.name === name)
+    let filter_items = todo.filter((item) => item.project.name===name)
     const columns = [
     {
         title: 'Project name',
