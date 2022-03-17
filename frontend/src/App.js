@@ -69,6 +69,7 @@ class App extends React.Component {
                                     <Routes>
 
                                         <Route path="/users" element={<UserList users={this.state.users}/>} />
+                                        <Route path="/users/:username" element={<ProjToDoList todo={this.state.todo}/>} />
                                         <Route path="/projects" element={<ProjectList projects={this.state.projects}/>} />
                                         <Route path="/projects/:name" element={<ProjToDoList todo={this.state.todo}/>} />
                                         <Route path="/todo" element={<ToDotList todo={this.state.todo}/>} />

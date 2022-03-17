@@ -5,7 +5,10 @@ import {Table} from 'antd';
 
 const ProjToDoList = ({todo}) => {
     let {name} = useParams();
+    let {username} = useParams();
     let filter_items = todo.filter((item) => item.project.name===name)
+    let filter_items_1 = todo.filter((item) => item.user.username===username)
+
     const columns = [
     {
         title: 'Project name',
@@ -26,6 +29,11 @@ const ProjToDoList = ({todo}) => {
         title: 'User name',
         dataIndex: 'user',
         key: 'user',
+        render: user => (
+            <>
+                {user.username}
+            </>
+        )
     },
     {
         title: 'Created at',
@@ -45,12 +53,21 @@ const ProjToDoList = ({todo}) => {
         }
     },
 ]
-    return (
+    if (name) {
+        return (
         <Table
             dataSource={filter_items}
             columns={columns}
         />
-    )
+        )} else {
+            return (
+                 <Table
+                    dataSource={filter_items_1}
+                    columns={columns}
+                />
+            )
+        }
+
 }
 
 export default ProjToDoList

@@ -1,5 +1,6 @@
 import React from "react";
 import { Table } from 'antd'
+import {Link} from 'react-router-dom'
 
 
 const UserList = ({users}) => {
@@ -8,16 +9,13 @@ const UserList = ({users}) => {
         title: 'Username',
         dataIndex: 'username',
         key: 'username',
+        render: (text, record) => <Link to={record.username}>{record.username}</Link>
     },
     {
-        title: 'First Name',
+        title: 'Name',
         dataIndex: 'first_name',
         key: 'first_name',
-    },
-    {
-        title: 'Last Name',
-        dataIndex: 'last_name',
-        key: 'last_name',
+        render: (text, record) => record.first_name + " " + record.last_name
     },
     {
         title: 'Email',

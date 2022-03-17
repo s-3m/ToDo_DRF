@@ -20,9 +20,10 @@ const ToDotList = ({todo}) => {
         key: 'text',
     },
     {
-        title: 'User name',
+        title: 'Username',
         dataIndex: 'user',
         key: 'user',
+        render: user => user.username
     },
     {
         title: 'Created at',

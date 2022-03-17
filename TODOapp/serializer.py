@@ -20,7 +20,8 @@ class SimpleProjectModelSerializer(ModelSerializer):
 
 
 class ToDoModelSerializer(ModelSerializer):
-    user = StringRelatedField()
+    user = SimpleUserSerializer()
+    # user = StringRelatedField()
     project = SimpleProjectModelSerializer()
 
     class Meta:
