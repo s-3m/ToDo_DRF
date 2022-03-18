@@ -5,12 +5,12 @@ import ProjectList from "./components/Project";
 import ToDotList from "./components/ToDo";
 import ProjToDoList from "./components/ProjectToDo";
 import axios from "axios";
-// import Menu from "./components/menu";
 import Footer from "./components/footer";
 import Header from "./components/header";
 import NotFound404 from "./components/notFound"
-import {Row, Col} from 'antd'
-import {BrowserRouter, Navigate, Route, Routes, SwitchProps} from "react-router-dom";
+import {Row, Col,} from 'antd'
+import {BrowserRouter, Navigate, Route, Routes, } from "react-router-dom";
+
 
 
 
@@ -23,35 +23,22 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('http://127.0.0.1:8000/api/users/')
-        .then(response => {
-          const users = response.data.results
-            this.setState(
-        {
-                'users': users,
+      Promise.all([
+          axios.get('http://127.0.0.1:8000/api/users/'),
+          axios.get('http://127.0.0.1:8000/api/projects/'),
+          axios.get('http://127.0.0.1:8000/api/todo/'),
+      ]).then(response => {
+                            const users = response[0].data.results,
+                            projects = response[1].data.results,
+                            todo = response[2].data.results
+          this.setState(
+              {
+                  'users': users,
+                  'projects': projects,
+                  'todo': todo,
               }
-            )
-        }).catch(error => console.log(error))
-
-    axios.get('http://127.0.0.1:8000/api/projects/')
-        .then(response => {
-          const projects = response.data.results
-            this.setState(
-        {
-                'projects': projects,
-              }
-            )
-        }).catch(error => console.log(error))
-
-    axios.get('http://127.0.0.1:8000/api/todo/')
-        .then(response => {
-          const todo = response.data.results
-            this.setState(
-        {
-                'todo': todo,
-              }
-            )
-        }).catch(error => console.log(error))
+          )
+      }).catch(error => console.log(error))
   }
 
   render() {
