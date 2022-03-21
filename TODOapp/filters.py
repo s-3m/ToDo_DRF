@@ -19,7 +19,6 @@ class ToDoFilter(filters.FilterSet):
     create__gt = filters.DateTimeFilter(field_name='create', lookup_expr='date__gt')
     create__lt = filters.DateTimeFilter(field_name='create', lookup_expr='date__lt')
 
-
     class Meta:
         model = ToDo
         fields = ['project', 'text', 'create', 'user']
