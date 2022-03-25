@@ -24,6 +24,7 @@ SECRET_KEY = 'django-insecure-bg)zi#ic+0cym1ovb&tkev7444h_swd01ihww5nyb=d8ksq3%6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = []
 
 # Application definition
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_filters',
     'rest_framework.authtoken',
+    'djoser',
 
     'usersapp',
     'TODOapp',
