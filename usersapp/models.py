@@ -22,7 +22,6 @@ class Users(AbstractUser):
     birth_date = models.PositiveIntegerField(verbose_name='Дата рождения', null=True)
     email = models.EmailField(verbose_name='email', blank=False, unique=True)
     user_post = models.CharField(verbose_name='Должность', max_length=15, choices=post_choices, blank=True)
-    password = models.CharField(verbose_name='Пароль', max_length=128, blank=False)
 
     def __str__(self):
         return f'{self.last_name} {self.first_name}'

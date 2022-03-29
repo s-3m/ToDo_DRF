@@ -15,18 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter, SimpleRouter
-from usersapp.views import UsersListModel, UsersChangeModel, UserTestModel
+from rest_framework.routers import DefaultRouter
+# from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+from usersapp.views import UsersModel
 from TODOapp.views import ProjectModelViewSet
 from TODOapp.views import ToDoModelViewSet
 from rest_framework.authtoken import views
 
 
+
 router = DefaultRouter()
 
 # router.register('users', UsersListModel)
-router.register('test', UserTestModel)
-router.register('users_create', UsersChangeModel, basename='create')
+router.register('users', UsersModel)
 router.register('projects', ProjectModelViewSet)
 router.register('todo', ToDoModelViewSet)
 
@@ -36,6 +38,8 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
 
     path('auth/', include('djoser.urls')),
+    # path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair_view'),
+    # path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh_view'),
 
     path('api-token-auth/', views.obtain_auth_token, name='token'),
     path('api/', include(router.urls)),
