@@ -60,7 +60,7 @@
 }
 
 .main_menu ul {
-  width: 30%;
+  width: fit-content;
   justify-content: space-between;
   background-color: #d5d5d5;
 }

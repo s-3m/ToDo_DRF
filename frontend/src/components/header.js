@@ -3,6 +3,7 @@ import { Menu, notification, } from 'antd';
 import {FundProjectionScreenOutlined, UsergroupAddOutlined, CopyOutlined} from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import {Link} from 'react-router-dom'
+import App from '../App'
 
 const OpenNotifications = (placement, itemName) => {
     notification.info ({
@@ -11,7 +12,7 @@ const OpenNotifications = (placement, itemName) => {
     })
 }
 
-const Header = () => {
+const Header = (is_auth) => {
 
     return (
           <Menu className={'main_menu_list'} mode="horizontal">
@@ -23,6 +24,10 @@ const Header = () => {
             </Menu.Item>
             <Menu.Item key="alipay" icon={<CopyOutlined />} onClick={()=>OpenNotifications('topLeft', 'todo')}>
                 <Link to='/todo'>ToDo list</Link>
+            </Menu.Item>
+
+            <Menu.Item key="logout" icon={<CopyOutlined />} onClick={()=>OpenNotifications('topLeft', 'todo')}>
+                {is_auth.is_auth ? <a onClick={(is_auth.logout)}>Logout</a> : <Link to='/login'>Login</Link>}
             </Menu.Item>
           </Menu>
     );
