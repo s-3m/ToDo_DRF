@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 
 from .models import Users
 from .permission import AdminOnly, ManagerOnly, DeveloperOnly
