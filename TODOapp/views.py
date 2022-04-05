@@ -19,12 +19,12 @@ class ProjectModelViewSet(ModelViewSet):
     pagination_class = ProjectLimitPagination
     filter_class = ProjectFilter
 
-    # def get_permissions(self):
-    #     if self.action in ('create', 'update', 'partial_update', 'destroy'):
-    #         permission_classes = [AdminOnly | ManagerOnly]
-    #     else:
-    #         permission_classes = [IsAuthenticated]
-    #     return [permission() for permission in permission_classes]
+    def get_permissions(self):
+        if self.action in ('create', 'update', 'partial_update', 'destroy'):
+            permission_classes = [AdminOnly | ManagerOnly]
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
 
 class ToDoLimitPagination(LimitOffsetPagination):
@@ -36,7 +36,6 @@ class ToDoModelViewSet(ModelViewSet):
     serializer_class = ToDoModelSerializer
     pagination_class = ToDoLimitPagination
     filter_class = ToDoFilter
-    # permission_classes = [IsAuthenticated]
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
