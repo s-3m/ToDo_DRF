@@ -13,6 +13,12 @@ class ProjectModelSerializer(ModelSerializer):
         fields = ['name', 'users', 'link']
 
 
+class ProjectSerializerBase(ModelSerializer):
+    class Meta:
+        model = Project
+        fields = '__all__'
+
+
 class SimpleProjectModelSerializer(ModelSerializer):
     class Meta:
         model = Project
@@ -26,3 +32,11 @@ class ToDoModelSerializer(ModelSerializer):
     class Meta:
         model = ToDo
         exclude = ['id']
+
+
+class SimpleToDoModelSerializer(ModelSerializer):
+    class Meta:
+        model = ToDo
+        fields = '__all__'
+
+
