@@ -2,7 +2,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from TODOapp.models import Project, ToDo
-from TODOapp.serializer import ProjectModelSerializer, ToDoModelSerializer
+from TODOapp.serializer import ProjectSerializerBase, ProjectModelSerializer, ToDoModelSerializer, \
+    SimpleToDoModelSerializer
 from rest_framework.pagination import LimitOffsetPagination
 
 from usersapp.permission import ManagerOnly, AdminOnly
@@ -19,6 +20,11 @@ class ProjectModelViewSet(ModelViewSet):
     pagination_class = ProjectLimitPagination
     filter_class = ProjectFilter
 
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return ProjectModelSerializer
+        return ProjectSerializerBase
+
     def get_permissions(self):
         if self.action in ('create', 'update', 'partial_update', 'destroy'):
             permission_classes = [AdminOnly | ManagerOnly]
@@ -33,9 +39,14 @@ class ToDoLimitPagination(LimitOffsetPagination):
 
 class ToDoModelViewSet(ModelViewSet):
     queryset = ToDo.objects.all()
-    serializer_class = ToDoModelSerializer
+    # serializer_class = ToDoModelSerializer
     pagination_class = ToDoLimitPagination
     filter_class = ToDoFilter
+
+    def get_serializer_class(self):
+        if self.action in ['GET']:
+            return ToDoModelSerializer
+        return SimpleToDoModelSerializer
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()

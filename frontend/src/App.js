@@ -77,33 +77,19 @@ class App extends React.Component {
       axios.get('http://127.0.0.1:8000/api/projects/', {headers}).then(response => {
           const projects = response.data.results
           this.setState({'projects': projects})
-      })
+      }).catch(error => {
+                        console.log(error)
+                        this.setState({projects: []})
+                        })
 
       axios.get('http://127.0.0.1:8000/api/todo/', {headers}).then(response => {
           const todo = response.data.results
           this.setState({'todo': todo})
-      }).catch(error => {console.log(error)})
+      }).catch(error => {
+                        console.log(error)
+                        this.setState({todo: []})
+                        })
 
-      // Promise.all([
-      //     axios.get('http://127.0.0.1:8000/api/users/', {headers}),
-      //     axios.get('http://127.0.0.1:8000/api/projects/', {headers}),
-      //     axios.get('http://127.0.0.1:8000/api/todo/', {headers}),
-      // ]).then(response => {
-      //                       const users = response[0].data.results,
-      //                       projects = response[1].data.results,
-      //                       todo = response[2].data.results
-      //                       this.setState(
-      //                         {
-      //                             'users': users,
-      //                             'projects': projects,
-      //                             'todo': todo,
-      //
-      //                         }
-      //                       )
-      // }).catch(error => {
-      //     console.log(error)
-      //     this.setState({'users': []})
-      // })
 
   }
 
