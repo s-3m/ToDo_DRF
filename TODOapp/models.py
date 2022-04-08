@@ -6,7 +6,7 @@ from usersapp.models import Users
 
 class Project(models.Model):
     name = models.CharField(max_length=64, blank=False)
-    link = models.CharField(max_length=564, default=None)
+    link = models.CharField(max_length=564, default=None, null=True)
     users = models.ManyToManyField(Users)
 
     def __str__(self):
