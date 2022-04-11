@@ -4,13 +4,18 @@ from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 
 from .models import Users
 from .permission import AdminOnly, ManagerOnly, DeveloperOnly
-from .serializers import UsersModelsSerializers
+from .serializers import UsersModelsSerializers, UsersModelSerializerWithStuff
 
 
 class UsersModel(viewsets.ModelViewSet):
     queryset = Users.objects.all()
     serializer_class = UsersModelsSerializers
     render_classes = [JSONRenderer, BrowsableAPIRenderer]
+
+    def get_serializer_class(self):
+        if self.request.version == '2.0':
+            return UsersModelSerializerWithStuff
+        return UsersModelsSerializers
 
     def get_permissions(self):
         if self.action in ('create', 'update', 'partial_update', 'destroy'):
