@@ -47,6 +47,9 @@
 }
 
 .container {
+  display: flex;
+  flex-direction: column;
+  min-height: 50vh;
   width: 1440px;
   margin: 20px auto;
   /*margin: 20px 0 0 20px;*/
@@ -57,6 +60,16 @@
   height: 50px;
   text-align: center;
   background-color: #d5d5d5;
+}
+.main_menu_right {
+  padding-right: 20px;
+  padding-top: 8px;
+}
+.main_menu_left {
+  width: 100%;
+}
+button a {
+  padding-left: 6px;
 }
 
 .main_menu ul {
@@ -73,6 +86,9 @@
   color: red;
 
 }
+.content {
+  flex-grow: 1;
+}
 .users_list {
   align-content: center;
   text-align: center;
@@ -84,6 +100,7 @@
   padding: 10px 30px;
 }
 .footer {
+  flex-shrink: 0;
   display: flex;
   height: 50px;
   text-align: center;

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'drf_yasg',
+    'graphene_django',
 
     'usersapp',
     'TODOapp',
@@ -162,3 +163,11 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 100,
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
+
+GRAPHENE = {
+    "SCHEMA": "ToDo_DRF.schema.schema"
+}
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+]

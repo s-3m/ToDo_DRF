@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
 # from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -25,6 +26,7 @@ from TODOapp.views import ToDoModelViewSet
 from rest_framework.authtoken import views
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from graphene_django.views import GraphQLView
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -56,6 +58,7 @@ urlpatterns = [
 
     path('api-token-auth/', views.obtain_auth_token, name='token'),
     path('api/', include(router.urls)),
+    path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=True))),
 
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
