@@ -37,6 +37,6 @@ class ToDoModelSerializer(ModelSerializer):
 class SimpleToDoModelSerializer(ModelSerializer):
     class Meta:
         model = ToDo
-        fields = '__all__'
+        exclude = ('id',)
 
 

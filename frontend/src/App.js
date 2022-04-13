@@ -23,7 +23,8 @@ class App extends React.Component {
         'users': [],
         'projects': [],
         'todo': [],
-        'token': ''
+        'token': '',
+        'graph': []
 
     }
   }
@@ -90,6 +91,14 @@ class App extends React.Component {
                         this.setState({todo: []})
                         })
 
+      //try graphQl get data
+      const graphQlData =  `query allUsers {allUsers{username email}}`
+      axios.post('http://127.0.0.1:8000/graphql/', {query: graphQlData}, {headers}).then(response => {
+          const data = response.data.data.allUsers
+          this.setState({'graph': data})
+      }).catch(error => {
+                        console.log(error)
+                        })
 
   }
 
@@ -103,9 +112,7 @@ class App extends React.Component {
         <div className={'wrapper'}>
             <div className={'container'}>
                 <BrowserRouter>
-                    <div className={'main_menu'}>
-                        <Header is_auth={this.is_authenticated()} logout={()=>this.logout()}/>
-                    </div>
+                    <Header is_auth={this.is_authenticated()} logout={()=>this.logout()}/>
                     <div className={'content'}>
                         <div className={'data_table'}>
                             <Row>

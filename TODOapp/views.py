@@ -39,12 +39,12 @@ class ToDoLimitPagination(LimitOffsetPagination):
 
 class ToDoModelViewSet(ModelViewSet):
     queryset = ToDo.objects.all()
-    # serializer_class = ToDoModelSerializer
+    serializer_class = ToDoModelSerializer
     pagination_class = ToDoLimitPagination
     filter_class = ToDoFilter
 
     def get_serializer_class(self):
-        if self.action in ['GET']:
+        if self.request.method in ['GET']:
             return ToDoModelSerializer
         return SimpleToDoModelSerializer
 
