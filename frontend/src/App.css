@@ -99,6 +99,9 @@ button a {
 .users_list table th {
   padding: 10px 30px;
 }
+.button_add {
+  margin-bottom: 20px;
+}
 .footer {
   flex-shrink: 0;
   display: flex;

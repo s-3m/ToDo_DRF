@@ -1,9 +1,9 @@
 import React from "react";
-import {Space, Table} from 'antd';
+import {Space, Table, Button} from 'antd';
 import {Link} from 'react-router-dom';
 
 
-const ProjectList = ({projects}) => {
+const ProjectList = ({projects, deleteProjects}) => {
     const columns = [
     {
         title: 'Project name',
@@ -15,23 +15,32 @@ const ProjectList = ({projects}) => {
         title: 'User in project',
         dataIndex: 'users',
         key: 'users',
-        render: users => (
+        render: users =>
                 <Space size="middle">
                     {users.map(user => <a>{user.username+","+"\n"}</a>)}
                 </Space>
-        )
+
     },
     {
         title: 'Link to project',
         dataIndex: 'link',
         key: 'link',
     },
+    {
+        title: '',
+        dataIndex: 'deleteButton',
+        key: 'deleteButton',
+        render: (text, record) => <Button type="primary" danger onClick={()=>deleteProjects(record.id)}>Delete</Button>
+    }
 ]
     return (
-        <Table
-            dataSource={projects}
-            columns={columns}
-        />
+        <div className="projectList">
+            <Table
+                dataSource={projects}
+                columns={columns}
+            />
+            <Link to='/projects/create'><Button className="button_add" type="primary" style={{backgroundColor:'green', border:'None'}}>Add project</Button></Link>
+        </div>
     )
 }
 

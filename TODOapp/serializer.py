@@ -10,7 +10,7 @@ class ProjectModelSerializer(ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['name', 'users', 'link']
+        fields = ['id', 'name', 'users', 'link']
 
 
 class ProjectSerializerBase(ModelSerializer):
@@ -31,12 +31,12 @@ class ToDoModelSerializer(ModelSerializer):
 
     class Meta:
         model = ToDo
-        exclude = ['id']
+        fields = '__all__'
 
 
 class SimpleToDoModelSerializer(ModelSerializer):
     class Meta:
         model = ToDo
-        exclude = ('id',)
+        fields = '__all__'
 
 
