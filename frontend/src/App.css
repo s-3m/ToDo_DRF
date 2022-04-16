@@ -102,6 +102,10 @@ button a {
 .button_add {
   margin-bottom: 20px;
 }
+.search_project {
+  display: flex;
+  justify-content: end;
+}
 .footer {
   flex-shrink: 0;
   display: flex;

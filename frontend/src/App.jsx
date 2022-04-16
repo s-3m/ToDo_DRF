@@ -6,6 +6,7 @@ import ToDotList from "./components/ToDo";
 import ProjToDoList from "./components/ProjectToDo";
 import ProjectForm from "./components/ProjectForm";
 import ToDoForm from "./components/ToDoForm";
+import Search from "./components/search";
 import axios from "axios";
 import Footer from "./components/footer";
 import Header from "./components/header";
@@ -14,6 +15,7 @@ import LoginForm from "./components/Auth";
 import {Row, Col,} from 'antd'
 import {BrowserRouter, Navigate, Route, Routes, } from "react-router-dom";
 import Cookies from "universal-cookie/es6";
+import project from "./components/Project";
 
 
 
@@ -26,7 +28,8 @@ class App extends React.Component {
         'projects': [],
         'todo': [],
         'token': '',
-        'graph': []
+        'graph': [],
+        'originProject': [],
 
     }
   }
@@ -102,13 +105,26 @@ class App extends React.Component {
              let newTodo = response.data
              const user = this.state.users.filter((user)=>user.uid === newTodo.user)[0]
              const project = this.state.projects.filter((project)=>project.id === newTodo.project)[0]
-             console.log(project)
-
              newTodo.user = user
              newTodo.project = project
              this.setState({todo: [...this.state.todo, newTodo]})
-             console.log(this.state.todo)
          })
+ }
+
+ goSearch(word) {
+      this.setState({originProject: this.state.projects})
+     const searchState = this.state.projects.filter((item) => {
+         if (item.name.includes(word)) {
+             return (item)
+         }
+     })
+     this.setState({projects: searchState})
+ }
+
+ canceled_search() {
+      // this.setState({projects: []})
+      this.setState({projects: this.state.originProject})
+      // this.load_data()
  }
 
   load_data (){
@@ -168,7 +184,7 @@ class App extends React.Component {
 
                                         <Route path="/users" element={<UserList users={this.state.users}/>} />
                                         <Route path="/users/:username" element={<ProjToDoList todo={this.state.todo}/>} />
-                                        <Route path="/projects" element={<ProjectList projects={this.state.projects} deleteProjects={(id)=>this.deleteProject(id)}/>} />
+                                        <Route path="/projects" element={<ProjectList projects={this.state.projects} deleteProjects={(id)=>this.deleteProject(id)} search={(word)=>this.goSearch(word)} canceled={()=>this.canceled_search()}/>} />
                                         <Route path="/projects/:name" element={<ProjToDoList todo={this.state.todo}/>} />
                                         <Route path="/todo" element={<ToDotList todo={this.state.todo} delToDo={(id)=>this.deleteToDo(id)}/>} />
                                         <Route path="/login" element={<LoginForm get_token={(username, password) => this.get_token(username, password)}/>} />

@@ -1,9 +1,9 @@
 import React from "react";
 import {Space, Table, Button} from 'antd';
 import {Link} from 'react-router-dom';
+import Search from "./search";
 
-
-const ProjectList = ({projects, deleteProjects}) => {
+const ProjectList = ({projects, deleteProjects, search, canceled}) => {
     const columns = [
     {
         title: 'Project name',
@@ -34,12 +34,15 @@ const ProjectList = ({projects, deleteProjects}) => {
     }
 ]
     return (
-        <div className="projectList">
-            <Table
-                dataSource={projects}
-                columns={columns}
-            />
-            <Link to='/projects/create'><Button className="button_add" type="primary" style={{backgroundColor:'green', border:'None'}}>Add project</Button></Link>
+        <div>
+            <Search goSearch={(word)=>search(word)} canceled={canceled}/>
+            <div className="projectList">
+                <Table
+                    dataSource={projects}
+                    columns={columns}
+                />
+                <Link to='/projects/create'><Button className="button_add" type="primary" style={{backgroundColor:'green', border:'None'}}>Add project</Button></Link>
+            </div>
         </div>
     )
 }
