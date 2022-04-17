@@ -31,6 +31,13 @@ const ProjectList = ({projects, deleteProjects, search, canceled}) => {
         dataIndex: 'deleteButton',
         key: 'deleteButton',
         render: (text, record) => <Button type="primary" danger onClick={()=>deleteProjects(record.id)}>Delete</Button>
+    },
+    {
+        title: '',
+        dataIndex: 'createToDoButton',
+        key: 'createToDoButton',
+        render: (text, record) => <Link to={`/todo/create/${record.id}`}><Button type="primary" style={{backgroundColor: 'green'}}
+        >Add ToDo</Button></Link>
     }
 ]
     return (

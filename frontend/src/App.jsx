@@ -191,6 +191,7 @@ class App extends React.Component {
 
                                         <Route path="/projects/create" element={<ProjectForm users={this.state.users} createProject={(name, link, users)=>this.createProject(name, link, users)}/>} />
                                         <Route path="/todo/create" element={<ToDoForm users={this.state.users} projects={this.state.projects} createTodo={(project, text, user)=>this.createTodo(project, text, user)}/>} />
+                                        <Route path="/todo/create/:id" element={<ToDoForm users={this.state.users} projects={this.state.projects} createTodo={(project, text, user)=>this.createTodo(project, text, user)}/>} />
 
                                         <Route path="/" element={<Navigate to="/users" />} />
                                         <Route path="/*" element={<NotFound404 />}/>

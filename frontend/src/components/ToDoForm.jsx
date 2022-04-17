@@ -1,4 +1,5 @@
 import React from "react";
+import {useParams} from "react-router-dom";
 
 class ToDoForm extends React.Component {
     constructor(props) {
@@ -10,9 +11,6 @@ class ToDoForm extends React.Component {
         this.setState({
             [event.target.name]: event.target.value
         })
-        console.log(event.target.name)
-        console.log(event.target.value)
-        console.log(this.state)
 
     }
 
@@ -20,8 +18,9 @@ class ToDoForm extends React.Component {
         this.props.createTodo(this.state.project, this.state.text, this.state.user)
         event.preventDefault()
     }
-
     render() {
+        // const {id} = this.props.match.params
+        console.log(this.props)
         return (
             <form onSubmit={(event)=>this.handleSubmit(event)}>
                 <div className="form_todo_text form form_todo">

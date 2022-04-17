@@ -3,7 +3,7 @@ import React from "react";
 class Search extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {word: "введите название проекта"}
+        this.state = {word: ''}
     }
 
     handleChange(event) {
@@ -17,19 +17,16 @@ class Search extends React.Component {
         event.preventDefault()
     }
 
-    // canceled(){
-    //     this.props.canceled()
-    // }
 
     render() {
         return(
             <div className="search_project">
                 <form onSubmit={(event)=>this.handleSubmit(event)}>
-                    <input type="text" className="input_searc" name="word" value={this.state.word} onClick={()=>this.setState({word: ''})}
+                    <input type="text" className="input_searc" name="word" value={this.state.word} placeholder="Введите название"
                         onChange={(event)=>this.handleChange(event)}/>
                     <input type="submit" className="submit_searc" value="Search" style={{'margin-left': '3px'}}/>
                 </form>
-                <button onClick={()=>this.props.canceled()}>X</button>
+                {this.state.word!== '' ? <button onClick={()=>{this.props.canceled(); this.setState({word: ''})}}>X</button>: null}
             </div>
         )
     }
