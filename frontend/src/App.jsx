@@ -13,7 +13,7 @@ import Header from "./components/header";
 import NotFound404 from "./components/notFound";
 import LoginForm from "./components/Auth";
 import {Row, Col,} from 'antd'
-import {BrowserRouter, Navigate, Route, Routes, } from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes, useParams,} from "react-router-dom";
 import Cookies from "universal-cookie/es6";
 import project from "./components/Project";
 
@@ -29,7 +29,7 @@ class App extends React.Component {
         'todo': [],
         'token': '',
         'graph': [],
-        'originProject': [],
+        'originProject': '',
 
     }
   }
@@ -122,9 +122,7 @@ class App extends React.Component {
  }
 
  canceled_search() {
-      // this.setState({projects: []})
-      this.setState({projects: this.state.originProject})
-      // this.load_data()
+      this.state.originProject!=='' && this.setState({projects: this.state.originProject})
  }
 
   load_data (){
@@ -171,6 +169,12 @@ class App extends React.Component {
   }
 
   render() {
+    const Wrapper = (props) => {
+        const params = useParams()
+        return <ToDoForm users={this.state.users} projects={this.state.projects}
+                         createTodo={(project, text, user)=>this.createTodo(project, text, user)}
+                         {...{...props, match:{params}}} />
+    }
     return (
         <div className={'wrapper'}>
             <div className={'container'}>
@@ -187,11 +191,11 @@ class App extends React.Component {
                                         <Route path="/projects" element={<ProjectList projects={this.state.projects} deleteProjects={(id)=>this.deleteProject(id)} search={(word)=>this.goSearch(word)} canceled={()=>this.canceled_search()}/>} />
                                         <Route path="/projects/:name" element={<ProjToDoList todo={this.state.todo}/>} />
                                         <Route path="/todo" element={<ToDotList todo={this.state.todo} delToDo={(id)=>this.deleteToDo(id)}/>} />
-                                        <Route path="/login" element={<LoginForm get_token={(username, password) => this.get_token(username, password)}/>} />
+                                        <Route path="/login" element={<LoginForm get_token={(username, password) => this.get_token(username, password)} is_auth={()=>this.is_authenticated()}/>} />
 
                                         <Route path="/projects/create" element={<ProjectForm users={this.state.users} createProject={(name, link, users)=>this.createProject(name, link, users)}/>} />
                                         <Route path="/todo/create" element={<ToDoForm users={this.state.users} projects={this.state.projects} createTodo={(project, text, user)=>this.createTodo(project, text, user)}/>} />
-                                        <Route path="/todo/create/:id" element={<ToDoForm users={this.state.users} projects={this.state.projects} createTodo={(project, text, user)=>this.createTodo(project, text, user)}/>} />
+                                        <Route path="/todo/create/:id" element={<Wrapper />} />
 
                                         <Route path="/" element={<Navigate to="/users" />} />
                                         <Route path="/*" element={<NotFound404 />}/>

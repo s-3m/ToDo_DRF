@@ -26,7 +26,7 @@ class Search extends React.Component {
                         onChange={(event)=>this.handleChange(event)}/>
                     <input type="submit" className="submit_searc" value="Search" style={{'margin-left': '3px'}}/>
                 </form>
-                {this.state.word!== '' ? <button onClick={()=>{this.props.canceled(); this.setState({word: ''})}}>X</button>: null}
+                {this.state.word!== '' && <button onClick={()=>{this.props.canceled(); this.setState({word: ''})}}>X</button>}
             </div>
         )
     }
