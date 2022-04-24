@@ -89,6 +89,9 @@ button a {
 .content {
   flex-grow: 1;
 }
+.login_form {
+  padding-left: 350px;
+}
 .users_list {
   align-content: center;
   text-align: center;
@@ -118,3 +121,9 @@ button a {
   margin: auto;
 }
 
+
+
+/*.ant-form-item {*/
+/*  justify-content: center;*/
+/*  text-align: center;*/
+/*}*/
