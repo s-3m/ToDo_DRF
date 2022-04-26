@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Input, Button, Checkbox } from 'antd';
-import {SearchOutlined} from "@ant-design/icons";
+import {SearchOutlined, StopOutlined} from "@ant-design/icons";
 
 
 
@@ -45,18 +45,19 @@ class Search extends React.Component {
                     >
                         <Input type="text" name="word" placeholder="Please input project name" value={this.state.word} onChange={(event)=>this.handleChange(event)} />
                     </Form.Item>
-                    <Form.Item wrapperCol={{ offset: 0, span: 10 }}>
-                        <Button type="primary" htmlType="submit" shape="round" icon={<SearchOutlined />}>
+                    <Form.Item wrapperCol={{ offset: 10, span: 10 }}>
+                        <Button type="primary" htmlType="submit" shape="circle" icon={<SearchOutlined />}>
                         </Button>
+                    </Form.Item>
+                    <Form.Item wrapperCol={{ offset: -10, span: 0 }}>
+                        {this.state.word!== '' && <Button type="primary" danger shape="circle" icon={<StopOutlined />} style={{marginLeft: '2px'}}
+                                                  onClick={()=>{this.props.canceled();
+                                                  this.setState({word: ''})}}>
+                                                </Button>}
                     </Form.Item>
                 </Form>
 
-                {/*<form onSubmit={(event)=>this.handleSubmit(event)}>*/}
-                {/*    <input type="text" className="input_searc" name="word" value={this.state.word} placeholder="Введите название"*/}
-                {/*        onChange={(event)=>this.handleChange(event)}/>*/}
-                {/*    <input type="submit" className="submit_searc" value="Search" style={{'margin-left': '3px'}}/>*/}
-                {/*</form>*/}
-                {this.state.word!== '' && <button onClick={()=>{this.props.canceled(); this.setState({word: ''})}}>X</button>}
+
             </div>
         )
     }

@@ -1,47 +1,63 @@
 import React from "react";
+import {Button, Form, Input, Select} from "antd";
+import * as events from "events";
+import {Navigate} from "react-router-dom";
 
 class ProjectForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {name: "", link:"", users: props.users[1].uid}
+        this.state = {
+                        name: "",
+                        link:"",
+                        users: '',
+                        flag: false
+                    }
     }
 
-    handleChange(event) {
-        this.setState({
-            [event.target.name]: event.target.value,
+    handleChange(event, name) {
+        if (name) {
+            this.setState({
+            'users': event,
         })
+        } else {
+            this.setState({
+                [event.target.name]: event.target.value,
+        })}
+        console.log(this.state)
     }
 
     handleSubmit(event) {
         this.props.createProject(this.state.name, this.state.link, this.state.users)
+        this.setState({flag: true})
         event.preventDefault()
 
     }
 
     render() {
-        return (
-            <form onSubmit={(event)=>this.handleSubmit(event)}>
-                <div className="form_project_name form form_project">
-                    <label>Name of project</label>
-                    <input type="text" className="input_project_name" name="name" value={this.state.name}
-                        onChange={(event)=>this.handleChange(event)}/>
-                </div>
-                <div className="form_project_link form form_project">
-                    <label>Link on project</label>
-                    <input type="text" className="input_project_link" name="link"
-                        onChange={(event)=>this.handleChange(event)}/>
-                </div>
-
-                <div className="form_users_project form form_project">
-                    <label>User(s) in project</label>
-                    <select className="select select_users_form" name="users"
-                        onChange={(event)=>this.handleChange(event)}>
-                        {this.props.users.map((user)=><option value={user.uid}>{user.username}</option>)}
-                    </select>
-                </div>
-
-                <input type="submit" className="submit_project" value="Save"/>
-            </form>
+        if(this.state.flag) {return <Navigate to='/projects'/>;}
+        return(
+            <div className="project_form">
+                <Form
+                    name="project_form_form"
+                    onFinish={()=>this.handleSubmit()}
+                    wrapperCol={{span: 8}}
+                >
+                    <Form.Item label="Name of project" name="project_name" rules={[{ required: true, message: 'Input name of project' }]}>
+                        <Input type="text" name="name" wrapperCol={{offset: 8}} onChange={(event)=>this.handleChange(event)}/>
+                    </Form.Item>
+                    <Form.Item label="Link of project" name="project_link" rules={[{ required: true, message: 'Input link on project' }]}>
+                        <Input type="text" name="link" onChange={(event)=>this.handleChange(event)}/>
+                    </Form.Item>
+                    <Form.Item label="User in project" name="users" rules={[{ required: true, message: 'Select project`s user' }]}>
+                        <Select onChange={(event, name)=>this.handleChange(event, name='users')}> className="select select_users_form" name="users"
+                            {this.props.users.map((user)=><option value={user.uid}>{user.username}</option>)}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit" >Add project</Button>
+                    </Form.Item>
+                </Form>
+            </div>
         )
     }
 }

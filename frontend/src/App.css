@@ -92,6 +92,17 @@ button a {
 .login_form {
   padding-left: 350px;
 }
+.project_form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+}
+.project_form .ant-form-item {
+  justify-content: center;
+}
+.project_form .ant-form-item-control-input-content {
+  text-align: center;
+}
 .users_list {
   align-content: center;
   text-align: center;
