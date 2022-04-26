@@ -1,8 +1,9 @@
 import React from "react";
-import { Table } from 'antd';
+import {Button, Table} from 'antd';
+import {Link} from "react-router-dom";
 
 
-const ToDotList = ({todo}) => {
+const ToDotList = ({todo, delToDo}) => {
     const columns = [
     {
         title: 'Project name',
@@ -42,12 +43,21 @@ const ToDotList = ({todo}) => {
             }
         }
     },
+    {
+        title: '',
+        dataIndex: 'deleteButton',
+        key: 'deleteButton',
+        render: (text, record) => <Button type="primary" danger onClick={()=>delToDo(record.id)}>Delete</Button>
+    }
 ]
     return (
-        <Table
-            dataSource={todo}
-            columns={columns}
-        />
+        <div className="todoList">
+            <Table
+                dataSource={todo}
+                columns={columns}
+            />
+            <Link to="/todo/create"><Button className="button_add" type="primary" style={{backgroundColor:'green', border:'None'}}>Add ToDo</Button></Link>
+        </div>
     )
 }
 

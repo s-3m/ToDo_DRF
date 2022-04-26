@@ -89,6 +89,20 @@ button a {
 .content {
   flex-grow: 1;
 }
+.login_form {
+  padding-left: 350px;
+}
+.project_form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+}
+.project_form .ant-form-item {
+  justify-content: center;
+}
+.project_form .ant-form-item-control-input-content {
+  text-align: center;
+}
 .users_list {
   align-content: center;
   text-align: center;
@@ -98,6 +112,13 @@ button a {
 }
 .users_list table th {
   padding: 10px 30px;
+}
+.button_add {
+  margin-bottom: 20px;
+}
+.search_project {
+  display: flex;
+  justify-content: end;
 }
 .footer {
   flex-shrink: 0;
@@ -111,3 +132,9 @@ button a {
   margin: auto;
 }
 
+
+
+/*.ant-form-item {*/
+/*  justify-content: center;*/
+/*  text-align: center;*/
+/*}*/

@@ -52,4 +52,5 @@ class Query(graphene.ObjectType):
     def resolve_all_todo(self, info):
         return ToDo.objects.all()
 
+
 schema = graphene.Schema(query=Query)

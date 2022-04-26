@@ -4,14 +4,18 @@ import UserList from "./components/users";
 import ProjectList from "./components/Project";
 import ToDotList from "./components/ToDo";
 import ProjToDoList from "./components/ProjectToDo";
+import ProjectForm from "./components/ProjectForm";
+import ToDoForm from "./components/ToDoForm";
+// import Search from "./components/search";
 import axios from "axios";
 import Footer from "./components/footer";
 import Header from "./components/header";
 import NotFound404 from "./components/notFound";
 import LoginForm from "./components/Auth";
 import {Row, Col,} from 'antd'
-import {BrowserRouter, Navigate, Route, Routes, } from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes, useParams,} from "react-router-dom";
 import Cookies from "universal-cookie/es6";
+import project from "./components/Project";
 
 
 
@@ -24,7 +28,8 @@ class App extends React.Component {
         'projects': [],
         'todo': [],
         'token': '',
-        'graph': []
+        'graph': [],
+        'originProject': '',
 
     }
   }
@@ -65,6 +70,61 @@ class App extends React.Component {
       return headers
   }
 
+  deleteProject(id) {
+      const headers = this.get_headers()
+      axios.delete(`http://127.0.0.1:8000/api/projects/${id}/`, {headers})
+          .then(response => {this.setState({'projects': this.state.projects.filter((item)=>item.id !== id)})
+                }).catch(error => console.log(error))
+  }
+
+  deleteToDo(id) {
+      const headers = this.get_headers()
+      axios.delete(`http://127.0.0.1:8000/api/todo/${id}/`, {headers})
+          .then(response=>{this.setState({'todo': this.state.todo.filter((item)=>item.id !==id)})
+          }).catch(error=>console.log(error))
+  }
+
+ createProject(name, link, users) {
+      const headers = this.get_headers()
+      const data = {name: name, link: link, users: [users,]}
+      axios.post("http://127.0.0.1:8000/api/projects/", data, {headers})
+          .then(response=>{
+              let newProj = response.data
+              const user = this.state.users.filter((item)=>item.uid === newProj.users[0])[0]
+              newProj.users = [user]
+              this.setState({projects: [...this.state.projects, newProj]})
+          }).catch(error=>console.log(error))
+
+ }
+
+ createTodo(project, text, user) {
+      const headers = this.get_headers()
+      const data = {project: project, text: text, user: user}
+     axios.post("http://127.0.0.1:8000/api/todo/", data, {headers})
+         .then(response=> {
+             let newTodo = response.data
+             const user = this.state.users.filter((user)=>user.uid === newTodo.user)[0]
+             const project = this.state.projects.filter((project)=>project.id === newTodo.project)[0]
+             newTodo.user = user
+             newTodo.project = project
+             this.setState({todo: [...this.state.todo, newTodo]})
+         })
+ }
+
+ goSearch(word) {
+      this.setState({originProject: this.state.projects})
+     const searchState = this.state.projects.filter((item) => {
+         if (item.name.includes(word)) {
+             return (item)
+         }
+     })
+     this.setState({projects: searchState})
+ }
+
+ canceled_search() {
+      this.state.originProject!=='' && this.setState({projects: this.state.originProject})
+ }
+
   load_data (){
       const headers = this.get_headers()
       axios.get('http://127.0.0.1:8000/api/users/', {headers}).then(response => {
@@ -78,6 +138,7 @@ class App extends React.Component {
       axios.get('http://127.0.0.1:8000/api/projects/', {headers}).then(response => {
           const projects = response.data.results
           this.setState({'projects': projects})
+          console.log(this.state.projects)
       }).catch(error => {
                         console.log(error)
                         this.setState({projects: []})
@@ -108,6 +169,12 @@ class App extends React.Component {
   }
 
   render() {
+    const Wrapper = (props) => {
+        const params = useParams()
+        return <ToDoForm users={this.state.users} projects={this.state.projects}
+                         createTodo={(project, text, user)=>this.createTodo(project, text, user)}
+                         {...{...props, match:{params}}} />
+    }
     return (
         <div className={'wrapper'}>
             <div className={'container'}>
@@ -121,10 +188,15 @@ class App extends React.Component {
 
                                         <Route path="/users" element={<UserList users={this.state.users}/>} />
                                         <Route path="/users/:username" element={<ProjToDoList todo={this.state.todo}/>} />
-                                        <Route path="/projects" element={<ProjectList projects={this.state.projects}/>} />
+                                        <Route path="/projects" element={<ProjectList projects={this.state.projects} deleteProjects={(id)=>this.deleteProject(id)} search={(word)=>this.goSearch(word)} canceled={()=>this.canceled_search()}/>} />
                                         <Route path="/projects/:name" element={<ProjToDoList todo={this.state.todo}/>} />
-                                        <Route path="/todo" element={<ToDotList todo={this.state.todo}/>} />
-                                        <Route path="/login" element={<LoginForm get_token={(username, password) => this.get_token(username, password)}/>} />
+                                        <Route path="/todo" element={<ToDotList todo={this.state.todo} delToDo={(id)=>this.deleteToDo(id)}/>} />
+                                        <Route path="/login" element={<LoginForm get_token={(username, password) => this.get_token(username, password)} is_auth={()=>this.is_authenticated()}/>} />
+
+                                        <Route path="/projects/create" element={<ProjectForm users={this.state.users} createProject={(name, link, users)=>this.createProject(name, link, users)}/>} />
+                                        <Route path="/todo/create" element={<ToDoForm users={this.state.users} projects={this.state.projects} createTodo={(project, text, user)=>this.createTodo(project, text, user)}/>} />
+                                        <Route path="/todo/create/:id" element={<Wrapper />} />
+
                                         <Route path="/" element={<Navigate to="/users" />} />
                                         <Route path="/*" element={<NotFound404 />}/>
 

@@ -5,7 +5,7 @@ from .models import Users
 class UsersModelsSerializers(HyperlinkedModelSerializer):
     class Meta:
         model = Users
-        fields = ('username', 'password', 'user_post', 'first_name', 'last_name', 'email')
+        fields = ('uid', 'username', 'password', 'user_post', 'first_name', 'last_name', 'email')
 
 
 class SimpleUserSerializer(ModelSerializer):
@@ -17,4 +17,4 @@ class SimpleUserSerializer(ModelSerializer):
 class UsersModelSerializerWithStuff(ModelSerializer):
     class Meta:
         model = Users
-        fields = ('username', 'is_staff', 'is_superuser')
+        fields = ('uid', 'username', 'is_staff', 'is_superuser')

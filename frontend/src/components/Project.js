@@ -1,9 +1,9 @@
 import React from "react";
-import {Space, Table} from 'antd';
+import {Space, Table, Button} from 'antd';
 import {Link} from 'react-router-dom';
+import Search from "./search";
 
-
-const ProjectList = ({projects}) => {
+const ProjectList = ({projects, deleteProjects, search, canceled}) => {
     const columns = [
     {
         title: 'Project name',
@@ -15,23 +15,42 @@ const ProjectList = ({projects}) => {
         title: 'User in project',
         dataIndex: 'users',
         key: 'users',
-        render: users => (
+        render: users =>
                 <Space size="middle">
                     {users.map(user => <a>{user.username+","+"\n"}</a>)}
                 </Space>
-        )
+
     },
     {
         title: 'Link to project',
         dataIndex: 'link',
         key: 'link',
     },
+    {
+        title: '',
+        dataIndex: 'deleteButton',
+        key: 'deleteButton',
+        render: (text, record) => <Button type="primary" danger onClick={()=>deleteProjects(record.id)}>Delete</Button>
+    },
+    {
+        title: '',
+        dataIndex: 'createToDoButton',
+        key: 'createToDoButton',
+        render: (text, record) => <Link to={`/todo/create/${record.id}`}><Button type="primary" style={{backgroundColor: 'green'}}
+        >Add ToDo</Button></Link>
+    }
 ]
     return (
-        <Table
-            dataSource={projects}
-            columns={columns}
-        />
+        <div>
+            <Search goSearch={(word)=>search(word)} canceled={canceled}/>
+            <div className="projectList">
+                <Table
+                    dataSource={projects}
+                    columns={columns}
+                />
+                <Link to='/projects/create'><Button className="button_add" type="primary" style={{backgroundColor:'green', border:'None'}}>Add project</Button></Link>
+            </div>
+        </div>
     )
 }
 
