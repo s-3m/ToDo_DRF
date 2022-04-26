@@ -1,3 +1,8 @@
+# временный FIX проблемы с несовместимостью django 4 и graphene-django==2.15.0
+# https://github.com/graphql-python/graphene-django/issues/1284
+import django
+from django.utils.encoding import force_str
+django.utils.encoding.force_text = force_str
 """
 Django settings for ToDo_DRF project.
 

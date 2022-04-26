@@ -1,7 +1,6 @@
 from django.db.models import Model
 from rest_framework.serializers import ModelSerializer, StringRelatedField
 from usersapp.serializers import UsersModelsSerializers, SimpleUserSerializer
-
 from TODOapp.models import Project, ToDo
 
 
