@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-bg)zi#ic+0cym1ovb&tkev7444h_swd01ihww5nyb=d8ksq3%6
 DEBUG = True
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['80.78.248.82']
 
 # Application definition
 
@@ -174,5 +174,8 @@ GRAPHENE = {
 }
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:8080",
+    "http://127.0.0.1:80",
 ]
